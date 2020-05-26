@@ -1,5 +1,18 @@
 /*
- * Copyright 2019 Lawrence Livermore National Security
+    Copyright 2019 Lawrence Livermore National Security
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.Ï
  */
 package gov.llnl.gmp.minos.uhtolbnlpipeline;
 
@@ -42,7 +55,7 @@ import org.apache.commons.lang.ArrayUtils;
 /**
  * A program to convert a directory of Redvox JSON packets to a single HDF5
  * file.
- * 
+ *
  * @author Steven Magana-Zook (maganazook1@llnl.gov)
  */
 public class PackageRedvoxToHdf5 {
@@ -56,9 +69,8 @@ public class PackageRedvoxToHdf5 {
 
     /**
      * The main runner method.
-     * 
-     * @param args
-     *            Expected arguments: input directory, output file path.
+     *
+     * @param args Expected arguments: input directory, output file path.
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
@@ -87,8 +99,8 @@ public class PackageRedvoxToHdf5 {
         // Get a list of files to process
         Stream<Path> filesStream = Files.walk(pathInputDirectory);
         ArrayList<Path> filePaths = filesStream.filter((Path currentPath) -> currentPath.toFile().isFile())
-                                               .filter((Path currentPath) -> currentPath.toString().endsWith(".json"))
-                                               .collect(Collectors.toCollection(ArrayList::new));
+                .filter((Path currentPath) -> currentPath.toString().endsWith(".json"))
+                .collect(Collectors.toCollection(ArrayList::new));
 
         if (filePaths.size() <= 0) {
             System.err.println("There were no files to process.");
@@ -102,12 +114,10 @@ public class PackageRedvoxToHdf5 {
     /**
      * A method to create an HDF5 file out of a collection of JSON Serialized
      * Redvox packets.
-     * 
-     * @param strHdf5FilePath
-     *            The path to where the HDF5 file should be created.
-     * @param filePaths
-     *            The collection of Redvox packets to add to the HDF5 file as
-     *            datasets.
+     *
+     * @param strHdf5FilePath The path to where the HDF5 file should be created.
+     * @param filePaths The collection of Redvox packets to add to the HDF5 file
+     * as datasets.
      * @return The populated HDF5 file.
      */
     private static H5File createHdf5File(String strHdf5FilePath, ArrayList<Path> filePaths) {
@@ -147,11 +157,9 @@ public class PackageRedvoxToHdf5 {
 
     /**
      * A method to add a Redvox packet to an HDF5 file as a dataset.
-     * 
-     * @param filePath
-     *            The path to the JSON Serialized Redvox packet on disk.
-     * @param h5File
-     *            The HDF5 file being modified.
+     *
+     * @param filePath The path to the JSON Serialized Redvox packet on disk.
+     * @param h5File The HDF5 file being modified.
      * @throws Exception
      */
     private static void addDataset(Path filePath, H5File h5File) throws Exception {
@@ -176,65 +184,65 @@ public class PackageRedvoxToHdf5 {
         }
 
         // Add metadata not specific to any sensor
-        long[] genericMetadataDims = { 1 };
+        long[] genericMetadataDims = {1};
         Attribute attributeGenericMetadata = new Attribute("acquisitionServer", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.acquisitionServer() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.acquisitionServer()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("api", INT_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new int[] { wrappedPacket.api() });
+        attributeGenericMetadata.setValue(new int[]{wrappedPacket.api()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("appFileStartTimestampEpochMicrosecondsUtc", LONG_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new long[] { wrappedPacket.appFileStartTimestampEpochMicrosecondsUtc() });
+        attributeGenericMetadata.setValue(new long[]{wrappedPacket.appFileStartTimestampEpochMicrosecondsUtc()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("appFileStartTimestampMachine", LONG_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new long[] { wrappedPacket.appFileStartTimestampMachine() });
+        attributeGenericMetadata.setValue(new long[]{wrappedPacket.appFileStartTimestampMachine()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("appVersion", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.appVersion() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.appVersion()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("batteryLevelPercent", FLOAT_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new float[] { wrappedPacket.batteryLevelPercent() });
+        attributeGenericMetadata.setValue(new float[]{wrappedPacket.batteryLevelPercent()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("deviceMake", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.deviceMake() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.deviceMake()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("deviceModel", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.deviceModel() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.deviceModel()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("deviceOs", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.deviceOs() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.deviceOs()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("deviceOsVersion", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.deviceOsVersion() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.deviceOsVersion()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("deviceTemperatureC", FLOAT_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new float[] { wrappedPacket.deviceTemperatureC() });
+        attributeGenericMetadata.setValue(new float[]{wrappedPacket.deviceTemperatureC()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("redvoxId", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.redvoxId() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.redvoxId()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("serverTimestampEpochMicrosecondsUtc", LONG_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new long[] { wrappedPacket.serverTimestampEpochMicrosecondsUtc() });
+        attributeGenericMetadata.setValue(new long[]{wrappedPacket.serverTimestampEpochMicrosecondsUtc()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("timeSynchronizationServer", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.timeSynchronizationServer() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.timeSynchronizationServer()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         attributeGenericMetadata = new Attribute("uuid", STRING_TYPE, genericMetadataDims);
-        attributeGenericMetadata.setValue(new String[] { wrappedPacket.uuid() });
+        attributeGenericMetadata.setValue(new String[]{wrappedPacket.uuid()});
         h5File.writeAttribute(packetRootGroup, attributeGenericMetadata, false);
 
         int gzipCompressionLevel = 0;
@@ -243,7 +251,7 @@ public class PackageRedvoxToHdf5 {
         List<Long> microphoneData = microphoneSensor.payloadValues();
         long[] microphoneDataPrimitive = ArrayUtils.toPrimitive(microphoneData.toArray(new Long[0]));
 
-        long[] dims = { 1, (long) microphoneDataPrimitive.length };
+        long[] dims = {1, (long) microphoneDataPrimitive.length};
         long[] chunks = null;
         long[] maxdims = dims;
         Dataset datasetMicrophone = h5File.createScalarDS("microphone", packetRootGroup, LONG_TYPE, dims, maxdims, chunks, gzipCompressionLevel, microphoneDataPrimitive);
@@ -261,7 +269,7 @@ public class PackageRedvoxToHdf5 {
             List<Double> accelerometerValues = accelerometerSensor.payloadValues();
             double[] accelerometerDataPrimitive = ArrayUtils.toPrimitive(accelerometerValues.toArray(new Double[0]));
 
-            dims = new long[] { 1, (long) accelerometerDataPrimitive.length };
+            dims = new long[]{1, (long) accelerometerDataPrimitive.length};
             maxdims = dims;
             Dataset datasetAccelerometer = h5File.createScalarDS("accelerometer", packetRootGroup, DOUBLE_TYPE, dims, maxdims, chunks, gzipCompressionLevel, accelerometerDataPrimitive);
 
@@ -274,7 +282,7 @@ public class PackageRedvoxToHdf5 {
             List<Double> barometerValues = barometerSensor.payloadValues();
             double[] barometerDataPrimitive = ArrayUtils.toPrimitive(barometerValues.toArray(new Double[0]));
 
-            dims = new long[] { 1, (long) barometerDataPrimitive.length };
+            dims = new long[]{1, (long) barometerDataPrimitive.length};
             maxdims = dims;
             Dataset datasetBarometer = h5File.createScalarDS("barometer", packetRootGroup, DOUBLE_TYPE, dims, maxdims, chunks, gzipCompressionLevel, barometerDataPrimitive);
 
@@ -295,15 +303,15 @@ public class PackageRedvoxToHdf5 {
             Group groupGyroscope = h5File.createGroup("gyroscope", packetRootGroup);
             MetadataMapToAttribute(h5File, groupGyroscope, gyroscopeSensor.metadataMap());
 
-            long[] dimsX = new long[] { 1, (long) gyroscopeDataPrimitiveX.length };
+            long[] dimsX = new long[]{1, (long) gyroscopeDataPrimitiveX.length};
             long[] maxdimsX = dimsX;
             h5File.createScalarDS("X", groupGyroscope, DOUBLE_TYPE, dimsX, maxdimsX, chunks, gzipCompressionLevel, gyroscopeDataPrimitiveX);
 
-            long[] dimsY = new long[] { 1, (long) gyroscopeDataPrimitiveY.length };
+            long[] dimsY = new long[]{1, (long) gyroscopeDataPrimitiveY.length};
             long[] maxdimsY = dimsY;
             h5File.createScalarDS("Y", groupGyroscope, DOUBLE_TYPE, dimsY, maxdimsY, chunks, gzipCompressionLevel, gyroscopeDataPrimitiveX);
 
-            long[] dimsZ = new long[] { 1, (long) gyroscopeDataPrimitiveZ.length };
+            long[] dimsZ = new long[]{1, (long) gyroscopeDataPrimitiveZ.length};
             long[] maxdimsZ = dimsZ;
             h5File.createScalarDS("Z", groupGyroscope, DOUBLE_TYPE, dimsZ, maxdimsZ, chunks, gzipCompressionLevel, gyroscopeDataPrimitiveX);
         }
@@ -313,7 +321,7 @@ public class PackageRedvoxToHdf5 {
             ImageSensor imageSensor = optionalImageChannel.get();
             byte[] imageDataPrimitive = imageSensor.payloadBytes();
 
-            dims = new long[] { 1, (long) imageDataPrimitive.length };
+            dims = new long[]{1, (long) imageDataPrimitive.length};
             maxdims = dims;
             Dataset datasetImage = h5File.createScalarDS("image", packetRootGroup, BYTE_TYPE, dims, maxdims, chunks, gzipCompressionLevel, imageDataPrimitive);
 
@@ -326,7 +334,7 @@ public class PackageRedvoxToHdf5 {
             List<Double> infraredValues = infraredSensor.payloadValues();
             double[] infraredDataPrimitive = ArrayUtils.toPrimitive(infraredValues.toArray(new Double[0]));
 
-            dims = new long[] { 1, (long) infraredDataPrimitive.length };
+            dims = new long[]{1, (long) infraredDataPrimitive.length};
             maxdims = dims;
             Dataset datasetInfrared = h5File.createScalarDS("infrared", packetRootGroup, DOUBLE_TYPE, dims, maxdims, chunks, gzipCompressionLevel, infraredDataPrimitive);
             MetadataMapToAttribute(h5File, datasetInfrared, infraredSensor.metadataMap());
@@ -338,7 +346,7 @@ public class PackageRedvoxToHdf5 {
             List<Double> lightValues = lightSensor.payloadValues();
             double[] lightDataPrimitive = ArrayUtils.toPrimitive(lightValues.toArray(new Double[0]));
 
-            dims = new long[] { 1, (long) lightDataPrimitive.length };
+            dims = new long[]{1, (long) lightDataPrimitive.length};
             maxdims = dims;
             Dataset datasetLight = h5File.createScalarDS("light", packetRootGroup, DOUBLE_TYPE, dims, maxdims, chunks, gzipCompressionLevel, lightDataPrimitive);
             MetadataMapToAttribute(h5File, datasetLight, lightSensor.metadataMap());
@@ -360,16 +368,16 @@ public class PackageRedvoxToHdf5 {
             double[] locationDataPrimitiveLatitude = ArrayUtils.toPrimitive(locationValuesLatitude.toArray(new Double[0]));
             double[] locationDataPrimitiveLongitude = ArrayUtils.toPrimitive(locationValuesLongitude.toArray(new Double[0]));
 
-            long[] dimsAccuracy = new long[] { 1, (long) locationDataPrimitiveAccuracy.length };
+            long[] dimsAccuracy = new long[]{1, (long) locationDataPrimitiveAccuracy.length};
             h5File.createScalarDS("accuracy", groupLocation, DOUBLE_TYPE, dimsAccuracy, dimsAccuracy, chunks, gzipCompressionLevel, locationDataPrimitiveAccuracy);
 
-            long[] dimsAltitude = new long[] { 1, (long) locationDataPrimitiveAltitude.length };
+            long[] dimsAltitude = new long[]{1, (long) locationDataPrimitiveAltitude.length};
             h5File.createScalarDS("altitude", groupLocation, DOUBLE_TYPE, dimsAltitude, dimsAltitude, chunks, gzipCompressionLevel, locationDataPrimitiveAltitude);
 
-            long[] dimsLatitude = new long[] { 1, (long) locationDataPrimitiveLatitude.length };
+            long[] dimsLatitude = new long[]{1, (long) locationDataPrimitiveLatitude.length};
             h5File.createScalarDS("latitude", groupLocation, DOUBLE_TYPE, dimsLatitude, dimsLatitude, chunks, gzipCompressionLevel, locationDataPrimitiveLatitude);
 
-            long[] dimsLongitude = new long[] { 1, (long) locationDataPrimitiveLongitude.length };
+            long[] dimsLongitude = new long[]{1, (long) locationDataPrimitiveLongitude.length};
             h5File.createScalarDS("longitude", groupLocation, DOUBLE_TYPE, dimsLongitude, dimsLongitude, chunks, gzipCompressionLevel, locationDataPrimitiveLongitude);
         }
 
@@ -379,7 +387,7 @@ public class PackageRedvoxToHdf5 {
             List<Double> magnetometerValues = magnetometerSensor.payloadValues();
             double[] magnetometerDataPrimitive = ArrayUtils.toPrimitive(magnetometerValues.toArray(new Double[0]));
 
-            dims = new long[] { 1, (long) magnetometerDataPrimitive.length };
+            dims = new long[]{1, (long) magnetometerDataPrimitive.length};
             maxdims = dims;
             Dataset datasetMagnetometer = h5File.createScalarDS("magnetometer", packetRootGroup, DOUBLE_TYPE, dims, maxdims, chunks, gzipCompressionLevel, magnetometerDataPrimitive);
             MetadataMapToAttribute(h5File, datasetMagnetometer, magnetometerSensor.metadataMap());
@@ -391,36 +399,33 @@ public class PackageRedvoxToHdf5 {
             List<Long> timeSynchronizationValues = timeSynchronizationSensor.payloadValues();
             long[] timeSynchronizationDataPrimitive = ArrayUtils.toPrimitive(timeSynchronizationValues.toArray(new Long[0]));
 
-            dims = new long[] { 1, (long) timeSynchronizationDataPrimitive.length };
+            dims = new long[]{1, (long) timeSynchronizationDataPrimitive.length};
             maxdims = dims;
             Dataset datasetTimeSynchronization = h5File.createScalarDS(
                     "timeSynchronization",
-                        packetRootGroup,
-                        LONG_TYPE,
-                        dims,
-                        maxdims,
-                        chunks,
-                        gzipCompressionLevel,
-                        timeSynchronizationDataPrimitive);
+                    packetRootGroup,
+                    LONG_TYPE,
+                    dims,
+                    maxdims,
+                    chunks,
+                    gzipCompressionLevel,
+                    timeSynchronizationDataPrimitive);
             MetadataMapToAttribute(h5File, datasetTimeSynchronization, timeSynchronizationSensor.metadataMap());
         }
     }
 
     /**
      * A method to add all of the Map entries as Attributes to some HObject.
-     * 
-     * @param h5File
-     *            The file being moodified.
-     * @param hObject
-     *            The HDF Object (Group, Dataset, etc.) that the attribute will
-     *            be written to.
-     * @param metadata
-     *            A Map of String pairs containing the metadata to add as
-     *            attributes.
+     *
+     * @param h5File The file being moodified.
+     * @param hObject The HDF Object (Group, Dataset, etc.) that the attribute
+     * will be written to.
+     * @param metadata A Map of String pairs containing the metadata to add as
+     * attributes.
      * @throws HDF5Exception
      */
     private static void MetadataMapToAttribute(H5File h5File, HObject hObject, Map<String, String> metadata) throws HDF5Exception {
-        long[] attrDims = { 1 };
+        long[] attrDims = {1};
         for (Map.Entry<String, String> entry : metadata.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -428,16 +433,15 @@ public class PackageRedvoxToHdf5 {
 
             Attribute attribute = new Attribute(key, stringType, attrDims);
             boolean attrExisted = false;
-            attribute.setValue(new String[] { value });
+            attribute.setValue(new String[]{value});
             h5File.writeAttribute(hObject, attribute, attrExisted);
         }
     }
 
     /**
      * A method to read a Redvox packet from a JSON file.
-     * 
-     * @param filePath
-     *            THe path to the JSON Serialized packet on disk.
+     *
+     * @param filePath THe path to the JSON Serialized packet on disk.
      * @return An optional Redvox packet, or null on error.
      */
     private static Optional<Api900.RedvoxPacket> ReadPacketJson(Path filePath) {
