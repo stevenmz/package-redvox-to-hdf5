@@ -52,7 +52,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Authors
 
-* **Steven Magana-Zook** - *Initial work* - [Stevenmz](https://github.com/stevenmz)
+* **Steven Magaña-Zook** - *Initial work* - [Stevenmz](https://github.com/stevenmz)
 
 
 ## License
