@@ -9,6 +9,9 @@ This work was performed under the auspices of the U.S. Department of Energy by L
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### Download a Pre-built Version
+GitHub hosts certain releases of this software which would save you the effort of downloading Maven to build the code. You can find all released versions [here](https://github.com/stevenmz/package-redvox-to-hdf5/packages/).
+
 ### Prerequisites
 
 To build and run the code, you will need to download and install the following tools:
